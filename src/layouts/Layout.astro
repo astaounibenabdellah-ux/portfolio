@@ -1,0 +1,321 @@
+---
+/**
+ * BaseLayout - Main layout wrapper for all pages
+ * Includes header, footer, global styles, animations, and Vercel Analytics
+ */
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Portfolio – Abdolhak Staouni" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Portfolio of Abdolhak Staouni, Software Engineering Student at ESISA" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+    <style is:global>
+      /* === CSS Custom Properties === */
+      :root {
+        /* Colors */
+        --bg-primary: #0a0f1e;
+        --bg-secondary: #1a1f35;
+        --bg-tertiary: #25273d;
+        --text-primary: #f0f4f8;
+        --text-secondary: #a0aec0;
+        --text-muted: #64748b;
+        --border-color: #2d3748;
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --accent-color: #667eea;
+        --accent-glow: rgba(102, 126, 234, 0.15);
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+
+        /* Fonts */
+        --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+
+        /* Spacing */
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --spacing-2xl: 3rem;
+        --spacing-3xl: 4rem;
+
+        /* Shadows */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+        --shadow-glow: 0 0 30px var(--accent-glow);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        color-scheme: dark;
+      }
+
+      body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        font-size: 16px;
+        overflow-x: hidden;
+      }
+
+      /* === Animated Background Grid === */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+          linear-gradient(
+            0deg,
+            transparent 24%,
+            rgba(102, 126, 234, 0.05) 25%,
+            rgba(102, 126, 234, 0.05) 26%,
+            transparent 27%,
+            transparent 74%,
+            rgba(102, 126, 234, 0.05) 75%,
+            rgba(102, 126, 234, 0.05) 76%,
+            transparent 77%,
+            transparent
+          ),
+          linear-gradient(
+            90deg,
+            transparent 24%,
+            rgba(102, 126, 234, 0.05) 25%,
+            rgba(102, 126, 234, 0.05) 26%,
+            transparent 27%,
+            transparent 74%,
+            rgba(102, 126, 234, 0.05) 75%,
+            rgba(102, 126, 234, 0.05) 76%,
+            transparent 77%,
+            transparent
+          );
+        background-size: 50px 50px;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* Animated orbs */
+      body::after {
+        content: "";
+        position: fixed;
+        bottom: 20%;
+        right: 10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(102, 126, 234, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        filter: blur(40px);
+        animation: drift 20s ease-in-out infinite;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      @keyframes drift {
+        0%, 100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(30px, -50px);
+        }
+      }
+
+      /* === Typography === */
+      h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: var(--spacing-lg);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        color: var(--text-secondary);
+        margin-bottom: var(--spacing-md);
+      }
+
+      a {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #764ba2;
+      }
+
+      a:focus-visible {
+        outline: 2px solid var(--accent-color);
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
+
+      /* === Utility Classes === */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-lg);
+      }
+
+      .gradient-text {
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      /* === Scroll Reveal Animation === */
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      [data-reveal].revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* === Text Selection === */
+      ::selection {
+        background-color: var(--accent-color);
+        color: var(--bg-primary);
+      }
+
+      /* === Scrollbar === */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--accent-color);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #764ba2;
+      }
+
+      /* === Skip Link --- */
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--accent-color);
+        color: var(--bg-primary);
+        padding: 8px;
+        text-decoration: none;
+        z-index: 100;
+      }
+
+      .skip-link:focus {
+        top: 0;
+      }
+
+      /* === Responsive === */
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        h2 {
+          font-size: 1.875rem;
+        }
+
+        .container {
+          padding: 0 var(--spacing-md);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <slot />
+
+    <!-- Vercel Analytics Script -->
+    <script type="module">
+      import { inject } from "@vercel/analytics";
+      inject({
+        beforeSend: (event) => {
+          // Track custom events if needed
+          return event;
+        },
+      });
+    </script>
+
+    <!-- Scroll Reveal Script -->
+    <script is:inline>
+      const revealElements = () => {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll("[data-reveal]").forEach((el) => {
+          observer.observe(el);
+        });
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", revealElements);
+      } else {
+        revealElements();
+      }
+    </script>
+  </body>
+</html>

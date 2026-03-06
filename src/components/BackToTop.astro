@@ -1,0 +1,85 @@
+---
+/**
+ * BackToTop Component - Floating button to scroll back to top
+ */
+---
+
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: rgba(102, 126, 234, 0.1);
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 8px;
+    color: var(--accent-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 40;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .back-to-top:hover {
+    background: var(--accent-color);
+    color: var(--bg-primary);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .back-to-top svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .back-to-top {
+      width: 40px;
+      height: 40px;
+      bottom: 1.5rem;
+      right: 1.5rem;
+    }
+
+    .back-to-top svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+</style>
+
+<script is:inline>
+  const backToTopButton = document.getElementById("backToTop");
+
+  // Show/hide button based on scroll position
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 500) {
+      backToTopButton?.classList.add("visible");
+    } else {
+      backToTopButton?.classList.remove("visible");
+    }
+  });
+
+  // Scroll to top on click
+  backToTopButton?.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+</script>

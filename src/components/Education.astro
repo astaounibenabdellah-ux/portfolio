@@ -1,0 +1,191 @@
+---
+/**
+ * Education Section Component
+ * Timeline view of educational background
+ */
+
+import { studentData } from "../data/student";
+---
+
+<section id="education" class="education">
+  <div class="container">
+    <h2 data-reveal>Education</h2>
+
+    <div class="timeline">
+      {
+        studentData.education.map((edu, index) => (
+          <div class="timeline-item" data-reveal style={`--delay: ${index * 0.15}s`}>
+            <div class="timeline-dot">
+              {edu.latest && <span class="badge-latest">Latest</span>}
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-header">
+                <span class="period-badge">
+                  {edu.startYear} – {edu.endYear || "Present"}
+                </span>
+                <h3>{edu.degree}</h3>
+              </div>
+              <p class="field">{edu.field}</p>
+              <p class="institution">
+                <a href={edu.institutionUrl || "#"} target="_blank" rel="noopener noreferrer">
+                  {edu.institution}
+                </a>
+              </p>
+              {edu.description && <p class="description">{edu.description}</p>}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .education {
+    padding: 6rem 0;
+  }
+
+  .timeline {
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--accent-color),
+      transparent
+    );
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-left: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -11px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+    border: 3px solid var(--bg-primary);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .badge-latest {
+    position: absolute;
+    top: 28px;
+    left: -60px;
+    padding: 0.25rem 0.75rem;
+    background: var(--success-color);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+  }
+
+  .timeline-content {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .timeline-item:hover .timeline-content {
+    background: rgba(102, 126, 234, 0.1);
+    border-color: rgba(102, 126, 234, 0.3);
+    transform: translateX(12px);
+  }
+
+  .timeline-header {
+    margin-bottom: 1rem;
+  }
+
+  .period-badge {
+    display: inline-block;
+    padding: 0.5rem 0.875rem;
+    background: rgba(102, 126, 234, 0.15);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    color: var(--accent-color);
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+  }
+
+  .field {
+    font-weight: 600;
+    color: var(--accent-color);
+    margin: 0.5rem 0;
+  }
+
+  .institution {
+    margin: 0.5rem 0;
+  }
+
+  .institution a {
+    color: var(--accent-color);
+    text-decoration: none;
+  }
+
+  .description {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+    .timeline::before {
+      left: -1px;
+    }
+
+    .timeline-dot {
+      left: -8px;
+    }
+
+    .badge-latest {
+      position: static;
+      display: inline-block;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-item {
+      padding-left: 2rem;
+    }
+
+    .timeline-item:hover .timeline-content {
+      transform: translateX(0);
+    }
+
+    .timeline-content {
+      padding: 1rem;
+    }
+  }
+</style>

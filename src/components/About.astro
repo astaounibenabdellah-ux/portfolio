@@ -1,0 +1,29 @@
+---
+/**
+ * About Section Component
+ */
+
+import { studentData } from "../data/student";
+---
+
+<section id="about" class="about">
+  <div class="container">
+    <h2 data-reveal>About Me</h2>
+    <div class="about-content" data-reveal>
+      <p>{studentData.personal.bio}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding: 6rem 0;
+  }
+
+  .about-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    max-width: 800px;
+  }
+</style>
