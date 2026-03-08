@@ -191,20 +191,20 @@ export const studentData: StudentData = {
     },
   ],
   social: [
-    {
-      platform: "GitHub",
-      url: "https://github.com/astaounibenabdellah-ux",
-      icon: "Github",
-    },
-    {
-      platform: "LinkedIn",
-      url: "https://linkedin.com/in/abdolhak-staouni",
-      icon: "Linkedin",
-    },
-    {
-      platform: "Email",
-      url: "mailto:a.staounibenabdellah@esisa.ac.ma",
-      icon: "Mail",
-    },
+      {
+        platform: "GitHub",
+        url: "https://github.com/astaounibenabdellah-ux",
+        icon: "Github",
+      },
+      {
+        platform: "LinkedIn",
+        url: "https://www.linkedin.com/in/abdolhak-staouni/",
+        icon: "Linkedin",
+      },
+      {
+        platform: "Email",
+        url: "mailto:a.staounibenabdellah@esisa.ac.ma",
+        icon: "Mail",
+      },
   ],
 };
