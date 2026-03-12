@@ -90,6 +90,7 @@ export const studentData: StudentData = {
     subtitle: "AI & Machine Learning Enthusiast",
     bio: "I am a passionate software engineering student at ESISA (École Supérieure d'Ingénierie en Sciences Appliquées) in Fez, Morocco. I am deeply interested in artificial intelligence, machine learning, and computer vision. I believe in continuous learning and love contributing to innovative projects that solve real-world problems.",
     location: "Fez, Morocco",
+    avatar: "/avatar.jpg",
   },
   stats: [
     { label: "Projects Completed", value: 5 },
